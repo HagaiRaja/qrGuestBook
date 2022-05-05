@@ -3,6 +3,8 @@
 use App\Http\Controllers\GuestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScannerController;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,21 @@ use App\Http\Controllers\ScannerController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('qr-code-g', function () {
+  $id = (string) Str::uuid();
+  QrCode::size(500)
+          ->format('png')
+          ->generate($id, public_path("temp/qrcode.png"));
+  $path = "temp/qrcode.png";
+return view('qrCode', compact('path'));
+  
+});
+
+Route::get('qr-code-g/{id}', function ($id) {
+  $path = 'temp/'.$id . '.png';
+return view('qrCode', compact('path'));
+  
+});
 
 Route::get('/', [ScannerController::class, 'index'])->name('scanner.index');
 Route::redirect('/dashboard', '/guests')->name('dashboard');

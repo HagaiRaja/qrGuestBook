@@ -26,10 +26,12 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Nama</th>
-                      <th>Jlh. Tamu</th>
+                      <th>Name</th>
+                      <th># of Guests</th>
                       <th>Seat</th>
-                      <th>Datang</th>
+                      <th>Checkin At</th>
+                      <th>Actions</th>
+                      <th>QR Code</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -39,9 +41,9 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-              {{-- <a href="{{ route('dashboard.export') }}" class="btn btn-sm btn-info float-left">Export to Excel</a> --}}
-              <a href="{{ route('guest.create') }}" class="btn btn-sm btn-primary float-left mr-2">Add Guest</a>
-              <a href="" class="btn btn-sm btn-outline-primary float-left">Export to Excel</a>
+              {{-- <a href="{{ route('dashboard.export') }}" class="btn btn-info float-left">Export to Excel</a> --}}
+              <a href="{{ route('guest.create') }}" class="btn btn-primary float-left mr-2">Add Guest</a>
+              <a href="" class="btn btn-outline-primary float-left">Export to Excel</a>
             </div>
           </div>
           <!-- /.card -->
@@ -51,6 +53,22 @@
       <!-- /.row -->
     </div>
     <!-- /.container-fluid -->
+
+    <div class="modal fade bd-example-modal-lg" id="qr-modal" tabindex="-1" role="dialog" aria-labelledby="qr-modal" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalLongTitle">QR Code for: <span id="qr-title" class="badge badge-primary text-white"></span></h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="over">
+            <img src="" id="qr-img" class="img-fluid" alt="Responsive image">
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
   <!-- /.content -->
 </div>
@@ -61,21 +79,65 @@
   $(function () {
     
     var table = $('.yajra-datatable').DataTable({
-        data: [
-          [1, "Hagai", 2, "B16", ""],
-          [2, "Manael", 2, "B17", ""],
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('guest.list') }}",
+        columns: [
+            {data: 'id', name: 'id'},
+            {data: 'name', name: 'name'},
+            {data: 'rsvp_count', name: 'rsvp_count'},
+            {data: 'seat', name: 'seat'},
+            {
+              data: 'attended_at', 
+              name: 'attended_at',
+              render: function(data, type) {
+                    if (type === 'display') {
+                      if (data === null){
+                        return `<h5><span class="badge badge-danger text-white">Unattended</span></h5>`;
+                      }
+                      else {
+                        return `<h5><span class="badge badge-success text-white">${data}</span></h5>`;
+                      }
+                    }
+                     
+                    return data;
+                }
+            },
+            {data: 'id', name: 'action'},
+            {data: 'qr_code', name: 'qr_code'},
         ],
-        // processing: true,
-        // serverSide: true,
-        // ajax: "{{ route('guest.list') }}",
-        // columns: [
-        //     {data: 'id', name: 'id'},
-        //     {data: 'name', name: 'name'},
-        //     {data: 'rsvp_count', name: 'rsvp_count'},
-        //     {data: 'seat', name: 'seat'},
-        //     {data: 'attended_at', name: 'attended_at'},
-        // ]
+        "columnDefs": [
+            {
+                "render": function ( data, type, row ) {
+                    html = `
+                        <a href='#' data-toggle='tooltip' data-placement='top' title='See QR Code' class='see-qr' 
+                            aria-atomic='${row['qr_code']}' aria-busy='${row['name']}'>
+                        <i class="fas fa-eye fa-action"></i></a>
+                        <a href='/guests/${data}/edit')' data-toggle='tooltip' data-placement='top' title='Edit'>
+                        <i class='fa fa-edit fa-action'></i></a>
+                        <a href='/guests/${data}/destroy')' data-toggle='tooltip' data-placement='top' title='Delete'>
+                        <i class='fa fa-trash-alt fa-action'></i></a>
+                        `
+                     
+                    return html;
+                },
+                "targets": 5
+            },
+            { "visible": false,  "targets": [ 6 ] }
+        ]
     });
+
+    table.on( 'draw', function () {
+        console.log( 'Redraw occurred at: '+new Date().getTime() );
+        $('.see-qr').click(function (e) { 
+          e.preventDefault();
+          let qr_code = $(this).attr('aria-atomic');
+          let name = $(this).attr('aria-busy');
+          $('#qr-title').html(name);
+          $('#qr-img').attr('src', `/temp/${qr_code}.png`);
+          $('#qr-modal').modal('toggle');
+        });
+    } );
     
   });
 </script>

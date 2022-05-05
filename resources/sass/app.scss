@@ -23,3 +23,9 @@ $fa-font-path:"../webfonts";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+#over img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
