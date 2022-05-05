@@ -9,7 +9,7 @@
     <!-- Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library -->
     <li class="nav-item has-treeview">
-      <a href="{{ url('/guests') }}" class="nav-link {{ (request()->route()->getName()=='guest.index')?'active':''}}">
+      <a href="{{env('APP_URL')}}/guests" class="nav-link {{ (request()->route()->getName()=='guest.index')?'active':''}}">
         <i class="nav-icon fas fa-book"></i>
         <p>
           Guest List
