@@ -9,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>QR Guest Book</title>
-  <link rel="shortcut icon" type="image/x-icon" href="{{ asset ("img/logo.png") }}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{{env('APP_URL')}}/img/logo.png" />
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -46,7 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <aside class="main-sidebar sidebar-dark-primary elevation-4" style = "background-color:#010336">
       <!-- Brand Logo -->
       <a href="#" class="brand-link">
-        <img src="{{ asset ("img/logo.png") }}" alt="Tunas Daud" class="brand-image img-circle elevation-3"
+        <img src="{{env('APP_URL')}}/img/logo.png" alt="Tunas Daud" class="brand-image img-circle elevation-3"
              style="opacity: .8">
         <span class="brand-text font-weight-light" style="font-family: Bremen">Guest Book</span>
       </a>
@@ -56,7 +56,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="{{ asset ("img/user.jpg") }}" class="img-circle elevation-2" alt="User Image">
+            <img src="{{env('APP_URL')}}/img/user.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
             <a href="#" class="d-block">{{ Auth::user()->name }}</a>

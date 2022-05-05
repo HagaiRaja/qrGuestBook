@@ -7,12 +7,12 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
     <title>QR Guest Book</title>
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset ("img/logo.png") }}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{env('APP_URL')}}/img/logo.png" />
 
     
 
     <!-- Bootstrap core CSS -->
-<link href="{{ asset ("css/bootstrap.min.css") }}" rel="stylesheet">
+<link href="{{env('APP_URL')}}/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
