@@ -41,8 +41,8 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-              {{-- <a href="{{ route('dashboard.export') }}" class="btn btn-info float-left">Export to Excel</a> --}}
-              <a href="{{ route('guest.create') }}" class="btn btn-primary float-left mr-2">Add Guest</a>
+              {{-- <a href="{{env('APP_URL')}}/dashboard/export" class="btn btn-info float-left">Export to Excel</a> --}}
+              <a href="{{env('APP_URL')}}/guests/create" class="btn btn-primary float-left mr-2">Add Guest</a>
               <a href="" class="btn btn-outline-primary float-left">Export to Excel</a>
             </div>
           </div>
@@ -81,7 +81,7 @@
     var table = $('.yajra-datatable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('guest.list') }}",
+        ajax: "{{env('APP_URL')}}/guests/list",
         columns: [
             {data: 'id', name: 'id'},
             {data: 'name', name: 'name'},

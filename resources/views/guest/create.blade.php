@@ -26,7 +26,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form" method="POST" action="{{ route('guest.store') }}">
+            <form role="form" method="POST" action="{{env('APP_URL')}}/guests">
               @csrf
               <div class="card-body">
                 <div class="form-group row">

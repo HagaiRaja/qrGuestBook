@@ -32,15 +32,15 @@
 
     
     <!-- Custom styles for this template -->
-    <link href="{{ asset ("css/signin.css") }}" rel="stylesheet">
+    <link href="{{env('APP_URL')}}/css/signin.css" rel="stylesheet">
   </head>
   <body class="text-center">
     
 <main class="form-signin">
-  <form method="POST" action="{{ route('login') }}">
+  <form method="POST" action="{{env('APP_URL')}}/login">
     @csrf
     <a href="/">
-      <img class="mb-4" src="{{ asset ("img/logo.png") }}" alt="" width="72" height="57">
+      <img class="mb-4" src="{{env('APP_URL')}}/img/logo.png" alt="" width="72" height="57">
     </a>
     <h1 class="h3 mb-3 fw-normal">QR Guest Book</h1>
 

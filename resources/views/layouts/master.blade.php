@@ -35,7 +35,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <ul class="navbar-nav ml-auto">
         <button class="btn btn-danger" onclick="event.preventDefault();
         document.getElementById('logout-form').submit();">Logout</button>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        <form id="logout-form" action="{{env('APP_URL')}}/logout" method="POST" class="d-none">
           @csrf
         </form>
       </ul>
