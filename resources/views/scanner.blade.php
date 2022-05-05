@@ -6,7 +6,18 @@
 </head>
 <body>
 <div id="video-container" class="example-style-2">
-    <video id="qr-video"></video>
+	<video id="qr-video"></video>
+	{{-- <div class="scan-region-highlight" style="position: absolute; pointer-events: none; transform: scaleX(-1); width: 424px; height: 424px; top: 106px; left: 161.5px;">
+		<svg class="scan-region-highlight-svg" viewBox="0 0 238 238" 
+					preserveAspectRatio="none" style="position:absolute;width:100%;height:100%;left:0;top:0;fill:none;stroke:#e9b213;stroke-width:4;stroke-linecap:round;stroke-linejoin:round">
+					<path d="M31 2H10a8 8 0 0 0-8 8v21M207 2h21a8 8 0 0 1 8 8v21m0 176v21a8 8 0 0 1-8 8h-21m-176 0H10a8 8 0 0 1-8-8v-21">
+						</path>
+		</svg>
+		<svg class="code-outline-highlight" preserveAspectRatio="none" style="width: 100%; height: 100%; fill: none; stroke: rgb(233, 178, 19); stroke-width: 5; stroke-dasharray: 25; stroke-linecap: round; stroke-linejoin: round; display: none;" viewBox="320 96 384 384">
+			<polygon points="363.2454716011722,376.0824213131417 360.57384500928003,371.25682390930376 640.8926115838651,444.98156387900923 667.2474983482225,442.6679746153717">
+			</polygon>
+		</svg>
+	</div> --}}
 </div>
 
 <div style="display:none">
@@ -96,6 +107,7 @@
             camQrResult.textContent = error;
             camQrResult.style.color = 'inherit';
         },
+				// overlay: document.getElementById('scan-region-highlight'),
         highlightScanRegion: true,
         highlightCodeOutline: true,
     });
@@ -150,9 +162,10 @@
         scanner.toggleFlash().then(() => flashState.textContent = scanner.isFlashOn() ? 'on' : 'off');
     });
 
-    document.getElementById('start-button').addEventListener('click', () => {
-        scanner.start();
-    });
+    // document.getElementById('start-button').addEventListener('click', () => {
+    //     scanner.start();
+    // });
+		scanner.start();
 
     document.getElementById('stop-button').addEventListener('click', () => {
         scanner.stop();
@@ -172,13 +185,36 @@
 </script>
 
 <style>
-    div {
-        margin-bottom: 16px;
-    }
+		body, html {
+			height: 100%;
+		}
+    body {
+			margin: 0;
+			font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+			font-size: 1rem;
+			font-weight: 400;
+			line-height: 1.5;
+			color: #212529;
+			text-align: left;
+			background-color: #ffffff;
+		}
 
     #video-container {
-        line-height: 0;
+      line-height: 0;
+			position: fixed;
+			right: 0;
+			bottom: 0;
+			min-width: 100%;
+			min-height: 100%;
     }
+
+		#qr-video {
+			position: fixed;
+			right: 0;
+			bottom: 0;
+			min-width: 100%;
+			min-height: 100%;
+		}
 
     #video-container.example-style-1 .scan-region-highlight-svg,
     #video-container.example-style-1 .code-outline-highlight {
