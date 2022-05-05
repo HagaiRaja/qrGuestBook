@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>QR Scanner Demo</title>
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset ("img/logo.png") }}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{env('APP_URL')}}/img/logo.png" />
 </head>
 <body>
 <div id="video-container" class="example-style-2">
@@ -78,7 +78,7 @@
 <!--<script src="../qr-scanner.umd.min.js"></script>-->
 <!--<script src="../qr-scanner.legacy.min.js"></script>-->
 <script type="module">
-    import QrScanner from "{{ asset('js/qr-scanner.min.js') }}";
+    import QrScanner from "{{env('APP_URL')}}/js/qr-scanner.min.js";
 
     const video = document.getElementById('qr-video');
     const videoContainer = document.getElementById('video-container');
