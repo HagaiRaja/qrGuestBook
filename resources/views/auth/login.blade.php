@@ -1,56 +1,73 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>QR Guest Book</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset ("img/logo.png") }}" />
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+    
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+    <!-- Bootstrap core CSS -->
+<link href="{{ asset ("css/bootstrap.min.css") }}" rel="stylesheet">
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
 
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
+    
+    <!-- Custom styles for this template -->
+    <link href="{{ asset ("css/signin.css") }}" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    
+<main class="form-signin">
+  <form method="POST" action="{{ route('login') }}">
+    @csrf
+    <a href="/">
+      <img class="mb-4" src="{{ asset ("img/logo.png") }}" alt="" width="72" height="57">
+    </a>
+    <h1 class="h3 mb-3 fw-normal">QR Guest Book</h1>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+    <div class="form-floating">
+      <input id="email" class="form-control" type="email" name="email" :value="old('email')" required placeholder="name@example.com">
+      <label for="floatingInput" for="email" :value="__('Email')">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input id="password" class="form-control"
+      type="password"
+      name="password"
+      required autocomplete="current-password" placeholder="Password">
+      <label for="password" :value="__('Password')">Password</label>
+    </div>
 
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
-            </div>
+    <div class="checkbox mb-3">
+      <label for="remember_me" class="inline-flex items-center">
+        <input type="checkbox" id="remember_me" value="remember-me" name="remember">
+        <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+      </label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">{{ __('Log in') }}</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+  </form>
+</main>
 
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
 
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ml-3">
-                    {{ __('Log in') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+    
+  </body>
+</html>

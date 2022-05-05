@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>QR Scanner Demo</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset ("img/logo.png") }}" />
 </head>
 <body>
 <div id="video-container" class="example-style-2">
