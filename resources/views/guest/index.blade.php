@@ -121,9 +121,10 @@
                      
                     return html;
                 },
-                "targets": 5
+                "targets": 5,
+                "searchable": false
             },
-            { "visible": false,  "targets": [ 6 ] }
+            { "visible": false,  "targets": [ 6 ], "searchable": false }
         ]
     });
 
