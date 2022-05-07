@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
     {
         if (env('APP_ENV') != 'local') {
             $clientIP = request()->ip();   
-            if ($clientIP != "223.195.37.236") {
+            if ($clientIP != "172.31.16.80") {
                 abort(403, 'Access denied');
             }
         }
