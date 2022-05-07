@@ -2,25 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>QR Scanner Demo</title>
+    <title>QR Guest Book</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{env('APP_URL')}}/img/logo.png" />
     <link href="{{env('APP_URL')}}/css/scanner.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-<div id="video-container" class="example-style-2">
+<div id="video-container" class="example-style-2" style="display:none">
 	<video id="qr-video"></video>
-	{{-- <div class="scan-region-highlight" style="position: absolute; pointer-events: none; transform: scaleX(-1); width: 424px; height: 424px; top: 106px; left: 161.5px;">
-		<svg class="scan-region-highlight-svg" viewBox="0 0 238 238" 
-					preserveAspectRatio="none" style="position:absolute;width:100%;height:100%;left:0;top:0;fill:none;stroke:#e9b213;stroke-width:4;stroke-linecap:round;stroke-linejoin:round">
-					<path d="M31 2H10a8 8 0 0 0-8 8v21M207 2h21a8 8 0 0 1 8 8v21m0 176v21a8 8 0 0 1-8 8h-21m-176 0H10a8 8 0 0 1-8-8v-21">
-						</path>
-		</svg>
-		<svg class="code-outline-highlight" preserveAspectRatio="none" style="width: 100%; height: 100%; fill: none; stroke: rgb(233, 178, 19); stroke-width: 5; stroke-dasharray: 25; stroke-linecap: round; stroke-linejoin: round; display: none;" viewBox="320 96 384 384">
-			<polygon points="363.2454716011722,376.0824213131417 360.57384500928003,371.25682390930376 640.8926115838651,444.98156387900923 667.2474983482225,442.6679746153717">
-			</polygon>
-		</svg>
-	</div> --}}
+</div>
+
+<div class="fill">
+    <img src="{{ $scanner->backgroundImageLink() }}" alt="bg-img" />
+    <div class="welcoming-message show" id="default-message">
+        <h1 class="wed-h1">Hagai & Putri</h1>
+        <h3 class="wed-h3">Bali, 12.14.2024</h2>
+    </div>
+    <div class="welcoming-message" id="welcome-message">
+        <h1 class="wed-h1">Welcome, <br><span id="name">Hagai Raja Sinulingga!</span></h1>
+        <h3 class="wed-h3"><span id="position">Keluarga Pria</span> | <strong>Seat <span id="seat">C16</span> </strong> | <span id="rsvp_count">2</span> pax</h2>
+    </div>
 </div>
 
 <div style="display:none">
@@ -94,14 +95,54 @@
     const fileSelector = document.getElementById('file-selector');
     const fileQrResult = document.getElementById('file-qr-result');
 
+    var last_check = "";
+
     function setResult(label, result) {
-        console.log(result.data);
+        last_check = result.data;
         label.textContent = result.data;
         camQrResultTimestamp.textContent = new Date().toString();
         label.style.color = 'teal';
         clearTimeout(label.highlightTimeout);
         label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
     }
+
+    function switchDefault() {
+        $('#welcome-message').removeClass("show");
+        $('#default-message').addClass("show");
+    }
+
+    function checkQR() {
+        if (last_check != "") {
+            $.ajax({
+                url: "{{env('APP_URL')}}/scanners/check/" + last_check,
+            }).done(function(data) {
+                data = JSON.parse(data);
+                if (data.length == 1) {
+                    data = data[0];
+                    $('#name').html(data.name);
+                    $('#position').html(data.position);
+                    $('#rsvp_count').html(data.rsvp_count);
+                    $('#seat').html(data.seat);
+
+                    $('#default-message').removeClass("show");
+                    $('#welcome-message').addClass("show");
+                    setTimeout(function () {
+                        switchDefault();
+                    }, 5000)
+                }
+            });
+            setTimeout(function () {
+                last_check = "";
+                checkQR();
+            }, 3000)
+        }
+        else {
+            setTimeout(function () {
+                checkQR();
+            }, 500)
+        }
+    }
+    checkQR();
 
     // ####### Web Cam Scanning #######
 
@@ -185,75 +226,11 @@
             .then(result => setResult(fileQrResult, result))
             .catch(e => setResult(fileQrResult, { data: e || 'No QR code found.' }));
     });
+
+    $(document).ready(function () {
+        
+    });
 </script>
 
-<style>
-		body, html {
-			height: 100%;
-		}
-    body {
-			margin: 0;
-			font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-			font-size: 1rem;
-			font-weight: 400;
-			line-height: 1.5;
-			color: #212529;
-			text-align: left;
-			background-color: #ffffff;
-		}
-
-    #video-container {
-      line-height: 0;
-			position: fixed;
-			right: 0;
-			bottom: 0;
-			min-width: 100%;
-			min-height: 100%;
-    }
-
-		#qr-video {
-			position: fixed;
-			right: 0;
-			bottom: 0;
-			min-width: 100%;
-			min-height: 100%;
-		}
-
-    #video-container.example-style-1 .scan-region-highlight-svg,
-    #video-container.example-style-1 .code-outline-highlight {
-        stroke: #64a2f3 !important;
-    }
-
-    #video-container.example-style-2 {
-        position: relative;
-        width: max-content;
-        height: max-content;
-        overflow: hidden;
-    }
-    #video-container.example-style-2 .scan-region-highlight {
-        border-radius: 30px;
-        outline: rgba(0, 0, 0, .5) solid 50vmax;
-    }
-    #video-container.example-style-2 .scan-region-highlight-svg {
-        display: none;
-    }
-    #video-container.example-style-2 .code-outline-highlight {
-        stroke: rgba(63, 255, 24, 0.5) !important;
-        stroke-width: 15 !important;
-        stroke-dasharray: none !important;
-    }
-
-    #flash-toggle {
-        display: none;
-    }
-
-    hr {
-        margin-top: 32px;
-    }
-    input[type="file"] {
-        display: block;
-        margin-bottom: 16px;
-    }
-</style>
 </body>
 </html>

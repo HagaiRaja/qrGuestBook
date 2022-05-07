@@ -84,13 +84,13 @@
         serverSide: true,
         ajax: "{{env('APP_URL')}}/guests/list",
         columns: [
-            {data: 'id', name: 'id'},
-            {data: 'name', name: 'name'},
-            {data: 'rsvp_count', name: 'rsvp_count'},
-            {data: 'seat', name: 'seat'},
+            {data: 'id', name: 'guests.id'},
+            {data: 'name', name: 'guests.name'},
+            {data: 'rsvp_count', name: 'guests.rsvp_count'},
+            {data: 'seat', name: 'guests.seat'},
             {
               data: 'attended_at', 
-              name: 'attended_at',
+              name: 'guests.attended_at',
               render: function(data, type) {
                     if (type === 'display') {
                       if (data === null){

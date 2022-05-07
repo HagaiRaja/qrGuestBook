@@ -16,6 +16,20 @@
         </p>
       </a>
     </li>
+    <li class="nav-item has-treeview">
+      <a href="{{env('APP_URL')}}/scanners" class="nav-link {{ (request()->route()->getName()=='scanner.index')?'active':''}}">
+        <i class="nav-icon fas fa-barcode"></i>
+        <p>
+          Scanner
+        </p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{{env('APP_URL')}}/scanners/show" class="nav-link">
+      <i class="nav-icon far fa-circle text-success"></i>
+      <p class="text">SCAN!</p>
+      </a>
+    </li>
   </ul>
 </nav>
 @endsection

@@ -23,8 +23,9 @@ class GuestController extends Controller
 
     public function list()
     {
-        $table = DB::table('guests')
-            ->select(['id', 'name', 'position', 'rsvp_count', 'qr_code', 'seat', 'attended_at' ]);
+        $table = DB::table('users')->join('guests', 'guests.user_id', '=', 'users.id')
+            ->select(['guests.id', 'guests.name', 'guests.position', 'guests.rsvp_count', 'guests.qr_code', 'guests.seat', 'guests.attended_at' ])
+            ->where('users.id', auth()->user()->id);
 
         return Datatables::of($table)
             ->make(true);
@@ -47,7 +48,8 @@ class GuestController extends Controller
         ]);
 
         $data['qr_code'] = (string) Str::uuid();
-    
+
+        $data['user_id'] = auth()->user()->id;
 
         QrCode::size(500)
           ->format('png')

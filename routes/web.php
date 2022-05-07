@@ -3,6 +3,7 @@
 use App\Http\Controllers\GuestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScannerController;
+use App\Http\Controllers\HomeController;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Str;
 
@@ -32,7 +33,13 @@ return view('qrCode', compact('path'));
   
 });
 
-Route::get('/', [ScannerController::class, 'index'])->name('scanner.index');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
+Route::get('/scanners', [ScannerController::class, 'index'])->name('scanner.index');
+Route::post('/scanners', [ScannerController::class, 'update'])->name('scanner.update');
+Route::get('/scanners/show', [ScannerController::class, 'show'])->name('scanner.show');
+Route::get('/scanners/check/{qr_code}', [ScannerController::class, 'check'])->name('scanner.check');
+
 Route::redirect('/dashboard', '/guests')->name('dashboard');
 Route::get('/guests', [GuestController::class, 'index'])->name('guest.index');
 Route::get('/guests/list', [GuestController::class, 'list'])->name('guest.list');

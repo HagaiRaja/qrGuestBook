@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Anybody:ital@1&family=Roboto+Flex:opsz,wght@8..144,100&family=Sacramento&display=swap');
+
+body, html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+#default-message {
+  font-size: 80px;
+}
+
+#default-message .wed-h3 {
+  transform: translateY(-5vh);
+}
+
+#welcome-message {
+  font-size: 50px;
+}
+
+.wed-h1 {
+  text-align: center;
+  font-family: 'Sacramento', cursive;
+  margin: 0;
+}
+
+.wed-h3 {
+  text-align: center;
+  font-size: 30px;
+  font-family: 'Roboto Flex', sans-serif;
+  margin: 0;
+}
+
+.wed-h2 {
+  text-align: center;
+  font-size: 50px;
+  font-family: 'Anybody', cursive;
+  margin: 0;
+}
+
+.welcoming-message {
+  opacity: 0;
+  transition: opacity 0.6s linear;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -130%);
+  transform: translate(-50%, -130%);
+  z-index: 100;
+}
+
+.show {
+  opacity: 1;
+}
+
+.fill {
+  position: absolute; 
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fill img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#video-container {
+  line-height: 0;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
+
+#qr-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
+
+#video-container.example-style-1 .scan-region-highlight-svg,
+#video-container.example-style-1 .code-outline-highlight {
+    stroke: #64a2f3 !important;
+}
+
+#video-container.example-style-2 {
+    position: relative;
+    width: max-content;
+    height: max-content;
+    overflow: hidden;
+}
+#video-container.example-style-2 .scan-region-highlight {
+    border-radius: 30px;
+    outline: rgba(0, 0, 0, .5) solid 50vmax;
+}
+#video-container.example-style-2 .scan-region-highlight-svg {
+    display: none;
+}
+#video-container.example-style-2 .code-outline-highlight {
+    stroke: rgba(63, 255, 24, 0.5) !important;
+    stroke-width: 15 !important;
+    stroke-dasharray: none !important;
+}
+
+#flash-toggle {
+    display: none;
+}
+
+hr {
+    margin-top: 32px;
+}
+input[type="file"] {
+    display: block;
+    margin-bottom: 16px;
+}

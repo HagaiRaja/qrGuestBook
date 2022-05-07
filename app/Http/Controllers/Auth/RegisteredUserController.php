@@ -33,6 +33,13 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        if (env('APP_ENV') != 'local') {
+            $clientIP = request()->ip();   
+            if ($clientIP != "223.195.37.236") {
+                abort(403, 'Access denied');
+            }
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -44,6 +51,8 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $user->scanner()->create();
 
         event(new Registered($user));
 
