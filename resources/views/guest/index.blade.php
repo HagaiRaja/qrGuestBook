@@ -70,6 +70,7 @@
       </div>
     </div>
   </section>
+  <checker-toaster title="Delete Status" msg-success="Guest has been removed" msg-failed="Failed"/>
   <!-- /.content -->
 </div>
 @endsection

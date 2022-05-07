@@ -57,19 +57,30 @@ class GuestController extends Controller
         return redirect('/guests/create?success&message='.$data['name']);
     }
 
-    public function edit()
+    public function edit(Guest $guest)
     {
-
+        return view('guest.edit', compact('guest'));
     }
 
-    public function update()
+    public function update(Guest $guest, Request $request)
     {
+        $data = request()->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'position' => ['required', 'string', 'max:255'],
+            'rsvp_count' => ['required', 'digits_between:1,4'],
+            'seat' => ['nullable', 'string', 'max:255'],
+            'email' => ['nullable', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:13'],
+        ]);
 
+        $guest->update($data);
+        return redirect('/guests/' . $guest->id . '/edit?success&message='.$data['name']);
     }
 
-    public function destroy()
+    public function destroy(Guest $guest)
     {
-
+        $guest->delete();
+        return redirect('/guests?success&message='.$guest->name);
     }
 
 }

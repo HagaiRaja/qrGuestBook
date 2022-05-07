@@ -39,8 +39,8 @@ Route::get('/guests/list', [GuestController::class, 'list'])->name('guest.list')
 Route::get('/guests/create', [GuestController::class, 'create'])->name('guest.create');
 Route::post('/guests', [GuestController::class, 'store'])->name('guest.store');
 Route::get('/guests/{guest}/edit', [GuestController::class, 'edit'])->name('guest.edit');
-Route::put('/guests/{guest}', [GuestController::class, 'update'])->name('guest.update');
-Route::delete('/guests/{guest}', [GuestController::class, 'destroy'])->name('guest.destroy');
+Route::post('/guests/{guest}', [GuestController::class, 'update'])->name('guest.update');
+Route::get('/guests/{guest}/destroy', [GuestController::class, 'destroy'])->name('guest.destroy');
 
 // Route::get('/', function () {
 //     return view('welcome');
