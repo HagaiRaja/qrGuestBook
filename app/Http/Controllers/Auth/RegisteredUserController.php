@@ -13,6 +13,19 @@ use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
 {
+    public function get_ip(){
+        foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
+            if (array_key_exists($key, $_SERVER) === true){
+                foreach (explode(',', $_SERVER[$key]) as $ip){
+                    $ip = trim($ip); // just to be safe
+                    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
+                        return $ip;
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Display the registration view.
      *
@@ -21,8 +34,8 @@ class RegisteredUserController extends Controller
     public function create()
     {
         if (env('APP_ENV') != 'local') {
-            $clientIP = request()->ip();
-            if ($clientIP != "172.31.16.80") {
+            $clientIP = $this->get_ip();
+            if (!in_array($clientIP, json_decode(env("ALLOWED_IP"))->ip)) {
                 abort(403, 'Access denied');
             }
         }
@@ -40,8 +53,8 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         if (env('APP_ENV') != 'local') {
-            $clientIP = request()->ip();
-            if ($clientIP != "172.31.16.80") {
+            $clientIP = $this->get_ip();
+            if (!in_array($clientIP, json_decode(env("ALLOWED_IP"))->ip)) {
                 abort(403, 'Access denied');
             }
         }
