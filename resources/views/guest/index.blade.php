@@ -21,6 +21,57 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-lg-3 col-6">
+                    <div class="small-box bg-info">
+                      <div class="inner">
+                        <h3>
+                          <span id="guests_count"></span> / 
+                          <span id="guests_all"></span>
+                        </h3>
+                        <p># of Guests</p>
+                      </div>
+                      <div class="icon">
+                        <i class="ion ion-bag"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 col-6">
+                    <div class="small-box bg-success">
+                      <div class="inner">
+                        <h3>
+                          <span id="attendances_count"></span> / 
+                          <span id="attendances_all"></span>
+                        </h3>
+                        <p># of Occupied Seat</p>
+                      </div>
+                      <div class="icon">
+                        <i class="ion ion-bag"></i>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-lg-6 col-6">
+                    <div class="small-box bg-danger">
+                      <div class="inner">
+                        <h3>
+                          <span id="name"></span> @ 
+                          <span id="rsvp_count"></span> pax - 
+                          <span id="seat"></span>
+                        </h3>
+                        <p>Last Check-in Guest</p>
+                      </div>
+                      <div class="icon">
+                        <i class="ion ion-bag"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div class="table-responsive">
                 <table class="table table-bordered yajra-datatable">
                   <thead>
@@ -104,7 +155,7 @@
                     return data;
                 }
             },
-            {data: 'id', name: 'action'},
+            {data: 'id', name: 'action', "orderable": "false"},
             {data: 'qr_code', name: 'qr_code'},
         ],
         "columnDefs": [
@@ -129,7 +180,7 @@
         ]
     });
 
-    table.on( 'draw', function () {
+    table.on( 'draw', function (data) {
         console.log( 'Redraw occurred at: '+new Date().getTime() );
         $('.see-qr').click(function (e) { 
           e.preventDefault();
@@ -140,6 +191,35 @@
           $('#qr-modal').modal('toggle');
         });
     } );
+
+    var last_data = null;
+
+    function checkGuest() {
+      $.ajax({
+                url: "{{env('APP_URL')}}/guests/check",
+            }).done(function(data) {
+                data = JSON.parse(data);
+                $('#guests_count').html(data.guests_count);
+                $('#guests_all').html(data.guests_all);
+                $('#attendances_count').html(data.attendances_count);
+                $('#attendances_all').html(data.attendances_all);
+
+                data.name = data.name.split(" ")[0];
+
+                $('#name').html(data.name);
+                $('#rsvp_count').html(data.rsvp_count);
+                $('#seat').html(data.seat);
+
+                if (last_data != null && last_data.name != data.name) {
+                  table.ajax.reload();
+                }
+                last_data = data;
+            });
+      setTimeout(function () {
+          checkGuest();
+      }, 1500);
+    }
+    checkGuest();
     
   });
 </script>

@@ -36,6 +36,45 @@ class GuestController extends Controller
         return view('guest.create');
     }
 
+    public function check()
+    {
+        $result = array();
+        $counter_all = DB::table('users')->join('guests', 'guests.user_id', '=', 'users.id')
+            ->select(DB::raw('count(guests.id) as guests_all, 
+                                sum(guests.rsvp_count) as attendances_all
+                                '))
+            ->where('users.id', auth()->user()->id)
+            ->get();
+        $result['guests_all'] = $counter_all[0]->guests_all;
+        $result['attendances_all'] = ($counter_all[0]->attendances_all) ?
+                                $counter_all[0]->attendances_all : 0;
+        
+        $counter_attend = DB::table('users')->join('guests', 'guests.user_id', '=', 'users.id')
+            ->select(DB::raw('count(guests.id) as guests_count, 
+                                sum(guests.rsvp_count) as attendances_count
+                                '))
+            ->where('users.id', auth()->user()->id)
+            ->whereRaw('guests.attended_at IS NOT NULL')
+            ->get();
+        $result['guests_count'] = $counter_attend[0]->guests_count;
+        $result['attendances_count'] = ($counter_attend[0]->attendances_count) ?
+                                $counter_attend[0]->attendances_count : 0;
+
+        $last_attended = DB::table('users')->join('guests', 'guests.user_id', '=', 'users.id')
+            ->select('guests.name', 'guests.rsvp_count', 'guests.seat')
+            ->where('users.id', auth()->user()->id)
+            ->whereRaw('guests.attended_at IS NOT NULL')
+            ->orderByDesc('guests.attended_at')
+            ->limit(1)
+            ->get();
+        $is_there_any_guests = count($last_attended);
+        $result['name'] = $is_there_any_guests ? $last_attended[0]->name : "";
+        $result['rsvp_count'] = $is_there_any_guests ? $last_attended[0]->rsvp_count : "";
+        $result['seat'] = $is_there_any_guests ? $last_attended[0]->seat : "";
+
+        echo json_encode($result);
+    }
+
     public function store()
     {
         $data = request()->validate([

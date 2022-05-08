@@ -19,8 +19,8 @@ class CreateGuestsTable extends Migration
             $table->string('name');
             $table->string('position');
             $table->string('rsvp_count');
-            $table->string('qr_code');
-            $table->string('seat')->nullable();
+            $table->string('qr_code')->unique();
+            $table->string('seat')->nullable()->unique();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->timestamp('attended_at')->nullable();

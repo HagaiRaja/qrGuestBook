@@ -42,6 +42,7 @@ Route::get('/scanners/check/{qr_code}', [ScannerController::class, 'check'])->na
 
 Route::redirect('/dashboard', '/guests')->name('dashboard');
 Route::get('/guests', [GuestController::class, 'index'])->name('guest.index');
+Route::get('/guests/check', [GuestController::class, 'check'])->name('guest.check');
 Route::get('/guests/list', [GuestController::class, 'list'])->name('guest.list');
 Route::get('/guests/create', [GuestController::class, 'create'])->name('guest.create');
 Route::post('/guests', [GuestController::class, 'store'])->name('guest.store');
