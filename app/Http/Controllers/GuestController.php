@@ -90,6 +90,8 @@ class GuestController extends Controller
             'phone' => ['nullable', 'string', 'max:13'],
         ]);
 
+        $data['rsvp_count'] = (int) $data['rsvp_count'];
+
         $data['qr_code'] = (string) Str::uuid();
 
         $data['user_id'] = auth()->user()->id;

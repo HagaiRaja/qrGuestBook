@@ -24,6 +24,7 @@ class GuestsExport implements FromCollection, WithHeadings, ShouldAutoSize, With
                   'guests.phone', 
                   'guests.attended_at')
           ->where('users.id', auth()->user()->id)
+          ->orderBy('guests.id', 'asc')
           ->get();
         return $table;
     }
