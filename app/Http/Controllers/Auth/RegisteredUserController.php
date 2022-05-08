@@ -20,6 +20,12 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
+        if (env('APP_ENV') != 'local') {
+            $clientIP = request()->ip();
+            if ($clientIP != "172.31.16.80") {
+                abort(403, 'Access denied');
+            }
+        }
         return view('auth.register');
     }
 
@@ -34,7 +40,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         if (env('APP_ENV') != 'local') {
-            $clientIP = request()->ip();   
+            $clientIP = request()->ip();
             if ($clientIP != "172.31.16.80") {
                 abort(403, 'Access denied');
             }
