@@ -121,7 +121,7 @@
       </div>
     </div>
   </section>
-  <checker-toaster title="Delete Status" msg-success="Guest has been removed" msg-failed="Failed"/>
+  <checker-toaster title="Update Status" msg-success="Guest has been updated" msg-failed="Failed"/>
   <!-- /.content -->
 </div>
 @endsection
@@ -158,7 +158,10 @@
             {data: 'id', name: 'action', "orderable": "false"},
             {data: 'qr_code', name: 'qr_code'},
         ],
-        "columnDefs": [
+        order: [
+            [4, "desc"]
+        ],
+        columnDefs: [
             {
                 "render": function ( data, type, row ) {
                     html = `
@@ -170,6 +173,18 @@
                         <a href='/guests/${data}/destroy')' data-toggle='tooltip' data-placement='top' title='Delete'>
                         <i class='fa fa-trash-alt fa-action'></i></a>
                         `
+                    if (row['attended_at'] === null) {
+                      html += `
+                        <a href='/guests/${data}/toggle/true')' data-toggle='tooltip' data-placement='top' title='Mark Attended'>
+                        <i class='fa fa-plus fa-action'></i></a>
+                      `
+                    }
+                    else {
+                      html += `
+                        <a href='/guests/${data}/toggle/false')' data-toggle='tooltip' data-placement='top' title='Mark Unattended'>
+                        <i class='fa fa-minus fa-action'></i></a>
+                      `
+                    }
                      
                     return html;
                 },

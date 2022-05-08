@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guest;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -116,6 +118,24 @@ class GuestController extends Controller
 
         $guest->update($data);
         return redirect('/guests/' . $guest->id . '/edit?success&message='.$data['name']);
+    }
+
+    public function toggle(Guest $guest, $command, Request $request)
+    {
+        if ($command == "false") {
+            $data['attended_at'] = NULL;
+            $guest->update($data);
+        }
+        else if ($command == "true"){
+            $date = new DateTime("now", new DateTimeZone('Asia/Singapore') );
+            $data['attended_at'] = $date->format('Y-m-d H:i:s');
+            $guest->update($data);
+        }
+        else {
+            return redirect('/guests?unknown_command&message='.$guest->name);
+        }
+
+        return redirect('/guests?success&message='.$guest->name);
     }
 
     public function destroy(Guest $guest)
