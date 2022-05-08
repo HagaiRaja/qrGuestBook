@@ -94,7 +94,7 @@
             <div class="card-footer clearfix">
               {{-- <a href="{{env('APP_URL')}}/dashboard/export" class="btn btn-info float-left">Export to Excel</a> --}}
               <a href="{{env('APP_URL')}}/guests/create" class="btn btn-primary float-left mr-2">Add Guest</a>
-              <a href="" class="btn btn-outline-primary float-left">Export to Excel</a>
+              <a href="{{env('APP_URL')}}/guests/export" class="btn btn-outline-primary float-left">Export to Excel</a>
             </div>
           </div>
           <!-- /.card -->

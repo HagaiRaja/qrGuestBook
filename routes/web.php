@@ -44,6 +44,7 @@ Route::redirect('/dashboard', '/guests')->name('dashboard');
 Route::get('/guests', [GuestController::class, 'index'])->name('guest.index');
 Route::get('/guests/check', [GuestController::class, 'check'])->name('guest.check');
 Route::get('/guests/{guest}/toggle/{command}', [GuestController::class, 'toggle'])->name('guest.toggle');
+Route::get('/guests/export', [GuestController::class, 'export'])->name('guest.export');
 Route::get('/guests/list', [GuestController::class, 'list'])->name('guest.list');
 Route::get('/guests/create', [GuestController::class, 'create'])->name('guest.create');
 Route::post('/guests', [GuestController::class, 'store'])->name('guest.store');

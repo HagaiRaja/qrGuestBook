@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
+use App\Exports\GuestsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GuestController extends Controller
 {
@@ -144,4 +146,8 @@ class GuestController extends Controller
         return redirect('/guests?success&message='.$guest->name);
     }
 
+    public function export()
+    {
+        return Excel::download(new GuestsExport, 'guests.xlsx');
+    }
 }
