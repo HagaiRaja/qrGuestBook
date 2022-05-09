@@ -25,9 +25,15 @@
       </a>
     </li>
     <li class="nav-item">
-      <a href="{{env('APP_URL')}}/scanners/show" class="nav-link">
+      <a href="{{env('APP_URL')}}/scanners/scan" class="nav-link">
       <i class="nav-icon far fa-circle text-success"></i>
       <p class="text">SCAN!</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{{env('APP_URL')}}/scanners/show" class="nav-link">
+      <i class="nav-icon far fa-circle text-warning"></i>
+      <p class="text">SHOW!</p>
       </a>
     </li>
   </ul>

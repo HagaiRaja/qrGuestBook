@@ -65,7 +65,7 @@ class GuestController extends Controller
                                 $counter_attend[0]->attendances_count : 0;
 
         $last_attended = DB::table('users')->join('guests', 'guests.user_id', '=', 'users.id')
-            ->select('guests.name', 'guests.rsvp_count', 'guests.seat')
+            ->select('guests.name', 'guests.rsvp_count', 'guests.seat', 'guests.attended_at')
             ->where('users.id', auth()->user()->id)
             ->whereRaw('guests.attended_at IS NOT NULL')
             ->orderByDesc('guests.attended_at')
@@ -75,6 +75,7 @@ class GuestController extends Controller
         $result['name'] = $is_there_any_guests ? $last_attended[0]->name : "";
         $result['rsvp_count'] = $is_there_any_guests ? $last_attended[0]->rsvp_count : "";
         $result['seat'] = $is_there_any_guests ? $last_attended[0]->seat : "";
+        $result['attended_at'] = $is_there_any_guests ? $last_attended[0]->attended_at : "";
 
         echo json_encode($result);
     }

@@ -23,6 +23,12 @@ class ScannerController extends Controller
     public function show()
     {
         $scanner = auth()->user()->scanner;
+        return view('scanner.show', compact('scanner'));
+    }
+
+    public function scan()
+    {
+        $scanner = auth()->user()->scanner;
         return view('scanner.scanner', compact('scanner'));
     }
 
