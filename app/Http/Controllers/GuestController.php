@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 use App\Exports\GuestsExport;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class GuestController extends Controller
 {
@@ -103,6 +104,45 @@ class GuestController extends Controller
         $guest = Guest::create($data);
 
         return redirect('/guests/create?success&message='.$data['name']);
+    }
+
+    public function store_excel()
+    {
+        $data = request()->validate([
+            'guest_list' => ['required', 'file:xlsx'],
+        ]);
+
+        $filename = $data['guest_list']->getClientOriginalName();
+
+        $reader = IOFactory::createReader('Xlsx');
+        $spreadsheet = $reader->load($data['guest_list']);
+        $worksheet = $spreadsheet->getActiveSheet();
+        $rows = $worksheet->toArray();
+
+        foreach($rows as $key => $value) {
+            if ($key == 0) continue;
+            $data = [
+                'name' => $value[0],
+                'position' => $value[1],
+                'rsvp_count' => $value[2],
+                'seat' => $value[3],
+                'email' => $value[4],
+                'phone' => $value[5],
+            ];
+
+            $data['rsvp_count'] = (int) $data['rsvp_count'];
+
+            $data['qr_code'] = (string) Str::uuid();
+
+            $data['user_id'] = auth()->user()->id;
+
+            QrCode::size(500)
+            ->format('png')
+            ->generate($data['qr_code'], public_path('temp/'. $data['qr_code'] . '.png'));
+            $guest = Guest::create($data);
+        };
+
+        return redirect('/guests/create?success&message='.$filename);
     }
 
     public function edit(Guest $guest)

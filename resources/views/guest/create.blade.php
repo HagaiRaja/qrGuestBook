@@ -54,14 +54,17 @@
                   <label for="position" class="col-md-4 col-form-label text-md-right">Position<span class="text-danger">*</span></label>
 
                   <div class="col-md-6">
-                      <input id="position" 
-                              type="text" 
-                              class="form-control @error('position') is-invalid @enderror" 
-                              name="position" 
-                              value="{{ old('position') }}" 
-                              autocomplete="position" 
-                              placeholder="Position (e.g. Keluarga Pria, Sahabat)"
-                              autofocus>
+                      <select id="position" class="form-control @error('position') is-invalid @enderror" name="position" value="{{ old('position') }}" autocomplete="position" autofocus>
+                        <option selected disabled>Position</option>
+                        <option {{ (old('position') =='Keluarga Pria')?'selected':'' }}>Keluarga Pria</option>
+                        <option {{ (old('position') =='Keluarga Wanita')?'selected':'' }}>Keluarga Wanita</option>
+                        <option {{ (old('position') =='Sahabat')?'selected':'' }}>Sahabat</option>
+                        <option {{ (old('position') =='Sahabat Pria')?'selected':'' }}>Sahabat Pria</option>
+                        <option {{ (old('position') =='Sahabat Wanita')?'selected':'' }}>Sahabat Wanita</option>
+                        <option {{ (old('position') =='Rekan Kerja')?'selected':'' }}>Rekan Kerja</option>
+                        <option {{ (old('position') =='Rekan Kerja Pria')?'selected':'' }}>Rekan Kerja Pria</option>
+                        <option {{ (old('position') =='Rekan Kerja Wanita')?'selected':'' }}>Rekan Kerja Wanita</option>
+                      </select> 
 
                       @error('position')
                           <span class="invalid-feedback" role="alert">
@@ -150,6 +153,46 @@
                               autofocus>
 
                       @error('phone')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                  </div>
+                </div>
+                
+              </div>
+              <div class="card-footer" style="display: flex">
+                <button class="btn btn-primary" type="submit"><i class="nav-icon fas fa-plus"></i> Add Guest</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Multiple Input (Upload Excel)</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" method="POST" action="{{env('APP_URL')}}/guests/excel" enctype="multipart/form-data">
+              @csrf
+              <div class="card-body">
+                <div class="form-group row">
+                  <label for="guest_list" class="col-md-4 col-form-label text-md-right">Upload File</label>
+
+                  <div class="col-md-6">
+                      <input id="guest_list" 
+                              type="file"
+                              accept=".xlsx"
+                              class="form-control @error('guest_list') is-invalid @enderror" 
+                              name="guest_list" 
+                              value="{{ old('guest_list') }}" 
+                              autocomplete="guest_list" 
+                              autofocus>
+                      <a href="{{env('APP_URL')}}/template/Template_Upload-Empty.xlsx">template - empty</a><br>
+                      <a href="{{env('APP_URL')}}/template/Template_Upload-Filled_Example.xlsx">template - filled example</a>
+
+                      @error('guest_list')
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
                           </span>

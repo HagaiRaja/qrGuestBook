@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QR Guest Book</title>
+  <title>Convite</title>
   <link rel="shortcut icon" type="image/x-icon" href="{{env('APP_URL')}}/img/logo.png" />
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -48,7 +48,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <a href="#" class="brand-link">
         <img src="{{env('APP_URL')}}/img/logo.png" alt="Tunas Daud" class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light" style="font-family: Bremen">Guest Book</span>
+        <span class="brand-text font-weight-light" style="font-family: Bremen">Convite</span>
       </a>
   
       <!-- Sidebar -->

@@ -54,14 +54,18 @@
                   <label for="position" class="col-md-4 col-form-label text-md-right">Position<span class="text-danger">*</span></label>
 
                   <div class="col-md-6">
-                      <input id="position" 
-                              type="text" 
-                              class="form-control @error('position') is-invalid @enderror" 
-                              name="position" 
-                              value="{{ old('position') ?? $guest->position }}" 
-                              autocomplete="position" 
-                              placeholder="Position (e.g. Keluarga Pria, Sahabat)"
-                              autofocus>
+
+                    <select id="position" class="form-control @error('position') is-invalid @enderror" name="position" autocomplete="position" autofocus>
+                      <option selected disabled>Position</option>
+                      <option {{ ($guest->position =='Keluarga Pria' || (old('position') =='Keluarga Pria'))?'selected':'' }}>Keluarga Pria</option>
+                      <option {{ ($guest->position =='Keluarga Wanita' || (old('position') =='Keluarga Wanita'))?'selected':'' }}>Keluarga Wanita</option>
+                      <option {{ ($guest->position =='Sahabat' || (old('position') =='Sahabat'))?'selected':'' }}>Sahabat</option>
+                      <option {{ ($guest->position =='Sahabat Pria' || (old('position') =='Sahabat Pria'))?'selected':'' }}>Sahabat Pria</option>
+                      <option {{ ($guest->position =='Sahabat Wanita' || (old('position') =='Sahabat Wanita'))?'selected':'' }}>Sahabat Wanita</option>
+                      <option {{ ($guest->position =='Rekan Kerja' || (old('position') =='Rekan Kerja'))?'selected':'' }}>Rekan Kerja</option>
+                      <option {{ ($guest->position =='Rekan Kerja Pria' || (old('position') =='Rekan Kerja Pria'))?'selected':'' }}>Rekan Kerja Pria</option>
+                      <option {{ ($guest->position =='Rekan Kerja Wanita' || (old('position') =='Rekan Kerja Wanita'))?'selected':'' }}>Rekan Kerja Wanita</option>
+                    </select> 
 
                       @error('position')
                           <span class="invalid-feedback" role="alert">

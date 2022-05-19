@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
-    <title>QR Guest Book</title>
+    <title>Convite</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{env('APP_URL')}}/img/logo.png" />
 
     
@@ -42,7 +42,7 @@
     <a href="/">
       <img class="mb-4" src="{{env('APP_URL')}}/img/logo.png" alt="" width="72" height="57">
     </a>
-    <h1 class="h3 mb-3 fw-normal">QR Guest Book</h1>
+    <h1 class="h3 mb-3 fw-normal">Convite</h1>
 
     <div class="form-floating">
       <input id="email" class="form-control" type="email" name="email" :value="old('email')" required placeholder="name@example.com">

@@ -48,6 +48,7 @@ Route::get('/guests/{guest}/toggle/{command}', [GuestController::class, 'toggle'
 Route::get('/guests/export', [GuestController::class, 'export'])->name('guest.export');
 Route::get('/guests/list', [GuestController::class, 'list'])->name('guest.list');
 Route::get('/guests/create', [GuestController::class, 'create'])->name('guest.create');
+Route::post('/guests/excel', [GuestController::class, 'store_excel'])->name('guest.store_excel');
 Route::post('/guests', [GuestController::class, 'store'])->name('guest.store');
 Route::get('/guests/{guest}/edit', [GuestController::class, 'edit'])->name('guest.edit');
 Route::post('/guests/{guest}', [GuestController::class, 'update'])->name('guest.update');
