@@ -57,6 +57,7 @@ class ScannerController extends Controller
             ->select(['guests.id', 'guests.name', 'guests.position', 'guests.rsvp_count', 'guests.qr_code', 'guests.seat', 'guests.attended_at' ])
             ->where('users.id', auth()->user()->id)
             ->where('guests.qr_code', $qr_code)
+            ->whereNull('guests.attended_at')
             ->get();
         if (count($table) == 1) {
             $date = new DateTime("now", new DateTimeZone('Asia/Singapore') );
