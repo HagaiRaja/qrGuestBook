@@ -119,6 +119,9 @@ class GuestController extends Controller
         $worksheet = $spreadsheet->getActiveSheet();
         $rows = $worksheet->toArray();
 
+        $added = 0;
+        $updated = 0;
+
         foreach($rows as $key => $value) {
             $table = DB::table('users')->join('guests', 'guests.user_id', '=', 'users.id')
                 ->select(['guests.id'])
@@ -134,6 +137,7 @@ class GuestController extends Controller
                         'email' => $value[4],
                         'phone' => $value[5],
                     ]);
+                $updated += 1;
                 continue;
             }
 
@@ -157,9 +161,12 @@ class GuestController extends Controller
             ->format('png')
             ->generate($data['qr_code'], public_path('temp/'. $data['qr_code'] . '.png'));
             $guest = Guest::create($data);
+            $added += 1;
         };
 
-        return redirect('/guests/create?success&message='.$filename);
+        $message = $filename . " successfully read.. Added: " . $added . ", Updated: " . $updated; 
+
+        return redirect('/guests/create?success&message='.$message);
     }
 
     public function edit(Guest $guest)
