@@ -120,6 +120,23 @@ class GuestController extends Controller
         $rows = $worksheet->toArray();
 
         foreach($rows as $key => $value) {
+            $table = DB::table('users')->join('guests', 'guests.user_id', '=', 'users.id')
+                ->select(['guests.id'])
+                ->where('users.id', auth()->user()->id)
+                ->where('guests.name', $value[0])
+                ->where('guests.position', $value[1])
+                ->get();
+            if (count($table) == 1) {
+                Guest::where('id', $table[0]->id)
+                    ->update([
+                        'rsvp_count' => $value[2],
+                        'seat' => $value[3],
+                        'email' => $value[4],
+                        'phone' => $value[5],
+                    ]);
+                continue;
+            }
+
             if ($key == 0) continue;
             $data = [
                 'name' => $value[0],
