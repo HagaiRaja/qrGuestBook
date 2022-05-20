@@ -7,6 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+    <h1 style="color: #FF0000">THIS IS JUST FOR READ TEST</h1>
 <div id="video-container" class="example-style-2">
 	<video id="qr-video"></video>
 	{{-- <div class="scan-region-highlight" style="position: absolute; pointer-events: none; transform: scaleX(-1); width: 424px; height: 424px; top: 106px; left: 161.5px;">
