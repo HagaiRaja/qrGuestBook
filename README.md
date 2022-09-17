@@ -1,5 +1,13 @@
 # Convite -- QR Guest Book App
- 
+
+## Business Application
+Some companies have commercialized this system on wedding and general events as their quest book technology.
+
+- [erugo.id](https://www.instagram.com/erugo.id/?hl=id)
+- [marie](https://marie.id/)
+
+For you, it's free :)
+
 ## Demo
 MP4 demo version can be accessed [here](https://github.com/HagaiRaja/qrGuestBook/blob/main/resources/video/demo.mp4)
 
