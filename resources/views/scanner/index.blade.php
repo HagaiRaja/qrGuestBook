@@ -42,7 +42,7 @@
                               value="{{ old('background_img') }}" 
                               autocomplete="background_img" 
                               autofocus>
-                      <a href="{{ $scanner->backgroundImageLink() }}">{{ ($scanner->background_img)?'Current background image':'' }}</a>
+                      <a href="{{ ($scanner->background_img)?$scanner->backgroundImageLink():env('APP_URL') . '/img/sample_bg.jpg' }}">{{ ($scanner->background_img)?'Current':'Sample' }} background image</a>
 
                       @error('background_img')
                           <span class="invalid-feedback" role="alert">
