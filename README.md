@@ -1,7 +1,9 @@
 # Convite -- QR Guest Book App
  
 ## Demo
-https://github.com/HagaiRaja/qrGuestBook/blob/main/resources/video/demo.mp4
+MP4 demo version can be accessed [here](https://github.com/HagaiRaja/qrGuestBook/blob/main/resources/video/demo.mp4)
+
+![Video Demo](https://github.com/HagaiRaja/qrGuestBook/blob/main/resources/video/demo.gif)
 
 ## Built Using
 - PHP 7.4
